@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!-- Default menuitem when opening the view -->
+    <menuitem id="main_app_manager_menu"
+              name="AppManager"
+              web_icon="app_manager,static/description/icon.png"
+              sequence="98"/>
+
+    <menuitem id="menu_module_updates"
+              parent="main_app_manager_menu"
+              sequence="1"
+              action="check_app_updates_action"/>
+
+    <menuitem id="menu_app_manager_general_settings"
+              name="Settings"
+              parent="app_manager.main_app_manager_menu"
+              sequence="99"
+              action="action_app_manager_config_settings"
+              groups="base.group_system"/>
+</odoo>

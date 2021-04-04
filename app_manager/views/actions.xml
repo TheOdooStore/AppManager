@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="check_app_updates_action" model="ir.actions.server">
+        <field name="name">Updates</field>
+        <field name="type">ir.actions.server</field>
+        <field name="model_id" ref="base.model_ir_module_module"/>
+        <field name="state">code</field>
+        <field name="code">
+            action = model.check_external_app_updates()
+        </field>
+    </record>
+
+    <record id="open_store_module_action" model="ir.actions.act_window">
+        <field name="name">AppManager apps</field>
+        <field name="res_model">ir.module.module</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="search_view_id" ref="app_manager.view_app_manager_search"/>
+        <field name="view_id" ref="app_manager.view_app_manager_kanban"/>
+        <field name="context">{'search_default_store_app': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_empty_folder">
+                No modules found that are on our appstore.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_app_manager_config_settings" model="ir.actions.act_window">
+        <field name="name">Settings</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_id" ref="app_res_config_settings_view_form"/>
+        <field name="view_mode">form</field>
+        <field name="target">inline</field>
+        <field name="context">{'module' : 'app_manager'}</field>
+    </record>
+</odoo>
