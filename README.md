@@ -47,7 +47,8 @@ sudo service odoo14-server restart
 
 
 ## Features
-# TODO: add overview screen showing the AppManager in an Odoo!
+<img alt="AppManager overview" title="AppManager overview" src="https://i.imgur.com/pM4JIUH.png">
+
 - Quick overview of apps and their statusses
 - Quick button to instantly download the latest version from The Odoo Store
 - Quick button to instantly download <b>and</b> update your app within the database<br/> <b>Note: this is at your own risk!</b>
