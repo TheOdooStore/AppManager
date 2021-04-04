@@ -23,7 +23,7 @@ AppManager will auto-check your apps against our platform and if updates are ava
 1. Navigate into your custom addons path and clone this repository
 ```
 cd /odoo14/custom/addons
-git clone https://github.com/theodoostore/app_manager.git
+git clone https://github.com/theodoostore/AppManager.git
 ```
 
 2. Checkout the right directory depending on the version of your Odoo instance:
@@ -33,7 +33,7 @@ git checkout 14.0
 
 3. Add the Github repository into your Odoo configuration file.
 ```
-addons_path=/odoo14/odoo14-server,/some/other/paths/you/have,/odoo14/custom/addons/app_manager
+addons_path=/odoo14/odoo14-server,/some/other/paths/you/have,/odoo14/custom/addons/AppManager
 ```
 
 4. Restart your Odoo instance so our new module is available
