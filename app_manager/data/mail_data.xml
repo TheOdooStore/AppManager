@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="mail_template_app_updates" model="mail.template">
+            <field name="name">AppManager: notify user of app updates</field>
+            <field name="model_id" ref="base.model_ir_module_module"/>
+            <field name="subject">Your database has app updates!</field>
+            <field name="email_from">${user.email_formatted | safe}</field>
+            <field name="partner_to"></field>
+            <field name="lang">${user.lang}</field>
+            <field name="body_html" type="html">
+                <div>
+                    % set user = ctx.get('user', user)
+                    % set company = user.company_id
+                    % set module_update_values = object.get_updatable_apps()
+                    <img src="/app_manager/static/description/icon.png"
+                         style="width: 128px; height: 128px; object-fit: contain; padding-top: 10px;
+                             padding-bottom: 10px; margin-left: auto; margin-right: auto; display: block;"
+                         alt="AppManager"/>
+
+                    <h3 style="font-size: 28px; color: #99b6b0; margin-top: 30px;text-align: center; margin-bottom: 20px;">
+                        Weekly overview: available app updates
+                    </h3>
+
+                    % if module_update_values:
+                    <p style="margin-bottom: 20px; font-size: 15px;">
+                        Hi ${user.name},<br/>
+                        We've found updates for your apps! Here's an overview of apps that need an update:
+                    </p>
+
+                    <table width="100%"
+                           style="color: #454748; font-size: 12px; border-collapse: collapse;">
+                        <tr style="#dee2e6; background-color: #D7E7E7; height: 30px;">
+                            <td width="30%" style="border-right: 2px solid lightgray;" align="center">
+                                <strong>App icon</strong>
+                            </td>
+                            <td width="25%" style="border-right: 2px solid lightgray;" align="center">
+                                <strong>Name</strong>
+                            </td>
+                            <td width="15%" style="border-right: 2px solid lightgray;" align="center">
+                                <strong>Installed version</strong>
+                            </td>
+                            <td width="15%" style="border-right: 2px solid lightgray;" align="center">
+                                <strong>Available version</strong>
+                            </td>
+                            <td width="15%" align="center">
+                                <strong>App info</strong>
+                            </td>
+                        </tr>
+                    </table>
+                    % for module_values in module_update_values:
+                    <table width="100%"
+                           style="color: #454748; font-size: 12px; border-collapse: collapse;">
+                        <tr style="${loop.cycle('background-color: #E9F1F3', 'background-color: #D7E7E7')}">
+                            <td width="30%" style="border-right: 2px solid lightgray;" align="center">
+                                <img src="${module_values.get('app_icon')}"
+                                     style="width: 96px; height: 96px; object-fit: contain; padding-top: 10px;
+                                     padding-bottom: 10px;" alt="App icon"/>
+                            </td>
+                            <td width="25%" style="border-right: 2px solid lightgray;" align="center">
+                                ${module_values.get('name')} (${module_values.get('technical_name')})
+                            </td>
+                            <td width="15%" style="border-right: 2px solid lightgray;" align="center">
+                                ${module_values.get('installed_version')}
+                                % if module_values.get('store_has_security_issue'):
+                                    <br/>
+                                    <span class="fa fa-bug" style="color:#EF946B;">
+                                            <b> Security issue!</b>
+                                    </span>
+                                % endif
+                            </td>
+                            <td width="15%" style="border-right: 2px solid lightgray;" align="center">
+                                ${module_values.get('store_version')}
+                            </td>
+                            <td width="15%" align="center">
+                                <a href="${module_values.get('store_url')}" target="_blank"
+                                   style="background-color: #EF946B; padding: 8px 16px 8px 16px; text-decoration: none;
+                                   color: #fff; border-radius: 5px; font-size:13px;">
+                                    App info
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
+                    % endfor
+                    % endif
+                    % if not module_update_values:
+                    <div class="alert alert-success">
+                        Good job! Your database is up-to-date and we have not found any app updates!
+                    </div>
+                    % endif
+                    <p style="margin-top: 20px; font-size: 15px;">
+                        Happy coding, <br/>
+                        <a href="https://www.theodoostore.com">The Odoo Store</a>
+                    </p>
+                </div>
+            </field>
+        </record>
+    </data>
+</odoo>

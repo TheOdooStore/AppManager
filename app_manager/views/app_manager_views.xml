@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_app_manager_search" model="ir.ui.view">
+        <field name="name">app.manager.ir.module.search</field>
+        <field name="model">ir.module.module</field>
+        <field name="arch" type="xml">
+            <search string="Search appstore modules">
+                <field name="name" filter_domain="['|', '|', ('summary', 'ilike', self), ('shortdesc', 'ilike', self), ('name',
+                        'ilike', self)]" string="Module"/>
+                <filter name="store_app" string="Store apps" domain="[('store_app', '=', True)]"/>
+                <filter name="needs_update" string="Needs update" domain="[('store_update_available', '=', True)]"/>
+                <filter name="app" string="Apps" domain="[('application', '=', True)]"/>
+                <filter name="extra" string="Extra" domain="[('application', '=', False)]"/>
+                <separator/>
+                <field name="category_id"/>
+                <group expand="0" string="Group By">
+                    <filter name="author" string="Author" context="{'group_by': 'author'}"/>
+                    <filter name="category" string="Category" context="{'group_by': 'category_id'}"/>
+                    <filter name="state" string="State" context="{'group_by': 'state'}"/>
+                </group>
+                <searchpanel>
+                    <field name="category_id" string="Categories" enable_counters="1"/>
+                </searchpanel>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_app_manager_tree" model="ir.ui.view">
+        <field name="name">app.manager.ir.module.tree</field>
+        <field name="model">ir.module.module</field>
+        <field name="arch" type="xml">
+            <tree decoration-info="state=='to upgrade' or state=='to install'"
+                  decoration-danger="state=='uninstalled'"
+                  decoration-muted="state=='uninstallable'"
+                  create="false"
+                  string="Store Apps">
+                <field name="shortdesc"/>
+                <field name="name" groups="base.group_no_one"/>
+                <field name="author"/>
+                <field name="website"/>
+                <field name="installed_version"/>
+                <field name="state"/>
+                <field name="store_update_available"/>
+                <field name="store_is_certified"/>
+                <field name="category_id" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_app_manager_kanban">
+        <field name="name">Store Apps</field>
+        <field name="model">ir.module.module</field>
+        <field name="arch" type="xml">
+            <kanban create="false" class="o_modules_kanban" id="store_manager">
+                <field name="icon"/>
+                <field name="to_buy"/>
+                <field name="store_version"/>
+                <field name="store_update_available"/>
+                <field name="name"/>
+                <field name="state"/>
+                <field name="summary"/>
+                <field name="website"/>
+                <field name="application"/>
+                <field name="installed_version"/>
+                <field name="store_app"/>
+                <field name="store_url"/>
+                <field name="store_is_free"/>
+                <field name="store_download_url"/>
+                <field name="store_is_certified"/>
+                <field name="store_has_security_issue"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_module_vignette" style="border: 0; padding: 0;">
+                            <div class="card" style="background-color:white;">
+                                <div class="card-header" style="height: 40px; background-color:white;font-size:14px;">
+                                    <div>
+                                        <t t-if="record.store_is_certified.raw_value == true">
+                                            <span class="fa fa-check" style="color:#6CA4AA;"> Certified app</span>
+                                        </t>
+                                       <t t-if="record.store_has_security_issue.raw_value == true">
+                                            <a t-attf-href="#{record.store_url.value}#extra-info" target="_blank">
+                                                <span class="fa fa-bug" style="color:#EF946B;">
+                                                    <b> Security issue!</b>
+                                                </span>
+                                            </a>
+                                        </t>
+                                        <t t-if="record.store_update_available.raw_value">
+                                            <span class="pull-right mr-3" style="color:#EF964B;">
+                                            <span class="fa fa-warning"/> Needs an update
+                                            </span>
+                                        </t>
+                                    </div>
+                                </div>
+                                <div class="o_dropdown_kanban dropdown" tabindex="-1">
+                                    <a class="dropdown-toggle o-no-caret btn" data-toggle="dropdown"
+                                        data-display="static" href="#" role="button" aria-label="Dropdown menu"
+                                        title="Dropdown menu">
+                                    <span class="fa fa-ellipsis-v"/>
+                                    </a>
+                                    <div class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                        <a type="edit" class="dropdown-item">Module Info</a>
+                                        <a t-if="record.website.raw_value" role="menuitem" class="dropdown-item"
+                                            t-att-href="record.website.raw_value" target="_blank">Learn More
+                                        </a>
+                                        <a t-if="installed" name="button_immediate_upgrade" type="object"
+                                            role="menuitem" class="dropdown-item">Upgrade
+                                        </a>
+                                        <a t-if="installed" name="button_uninstall_wizard" type="object" role="menuitem"
+                                            class="dropdown-item">Uninstall
+                                        </a>
+                                        <a t-if="record.store_url and record.store_app.raw_value == true"
+                                            t-attf-href="#{record.store_url.value}"
+                                            target="_blank" role="menuitem" class="dropdown-item">View on Store
+                                        </a>
+                                    </div>
+                                </div>
+                                <img class="card-img-top w-50 align-self-center p-3" 
+                                     t-attf-src="#{record.icon.value}" alt="App icon"/>
+                                <div class="card-body" style="background-color: white !important;">
+                                    <h3 class="card-title font-weight-bold">
+                                        <field name="name"/>
+                                    </h3>
+                                    <hr/>
+                                    <p class="oe_module_name">
+                                        <b>Installed version:</b>
+                                        <field name="installed_version"/>
+                                        <b>Store version:</b>
+                                        <field name="store_version"/>
+                                    </p>
+                                    <t t-esc="store_version"/>
+                                </div>
+                                <div class="card-footer pt-3 pb-3">
+                                    <t t-if="record.store_is_free.raw_value == true">
+                                        <span t-esc="store_download_url"/>
+                                        <a t-attf-href="#{record.store_download_url.value}" target="_blank">
+                                        <button type="button" name="download_app" class="btn btn-outline-info"
+                                            style="background-color: #44858C; color:white;border-radius:15px;">
+                                            Download app
+                                        </button>
+                                        </a>
+                                       <button type="object" name="download_remote_app"
+                                           class="btn btn-outline-info pull-right"
+                                           context="{'update_app': True}"
+                                           t-if="record.store_update_available.raw_value == true"
+                                           style="background-color: #EF946B; color:white;border-radius:15px;">
+                                           Download and update app
+                                       </button>
+                                    </t>
+                                    <t t-else="">
+                                        <a t-attf-href="#{record.store_url.value}" target="_blank" class="d-flex"
+                                         t-if="record.store_app.raw_value == true">
+                                        <button type="button" name="open_remote_app" class="btn btn-outline-info mx-auto"
+                                            style="background-color: #44858C; color:white;border-radius:15px;">
+                                            Download from The Odoo Store
+                                        </button>
+                                        </a>
+                                    </t>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+</odoo>

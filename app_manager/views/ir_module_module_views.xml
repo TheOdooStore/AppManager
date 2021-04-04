@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="app_manager_info" model="ir.ui.view">
+        <field name="inherit_id" ref="base.module_form"/>
+        <field name="model">ir.module.module</field>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page name="store_info" string="AppManager info">
+                    <group>
+                        <field name="store_version" readonly="1"/>
+                        <field name="store_update_available" readonly="1"/>
+                        <field name="store_url" widget="url" readonly="1"/>
+                        <field name="store_download_url" widget="url" readonly="1" attrs="{'invisible': [('store_is_free', '=', False)]}"/>
+                        <field name="store_is_free" readonly="1"/>
+                        <field name="store_is_certified" readonly="1"/>
+                        <field name="store_has_security_issue" readonly="1"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

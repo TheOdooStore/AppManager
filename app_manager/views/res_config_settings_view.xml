@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="app_res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.app.manager</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="50"/>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('settings')]" position="inside">
+                <div class="app_settings_block" data-string="app_manager"
+                     string="AppManager"
+                     data-key="app_manager">
+                    <h2>App configuration</h2>
+                    <div class="row mt16 o_settings_container">
+                        <div class="col-xs-12 col-md-6 o_setting_box" id="app_storage_location_block">
+                            <label string="Location to download apps too"
+                                   for="app_storage_location"/>
+                            <div class="text-muted">
+                                Fill in the path to the folder location on your server where you want to download
+                                the apps too.
+                                <br/>
+                                For example: /odoo14/custom/addons/your_custom_apps/
+                            </div>
+                            <div class="mt16">
+                                <field name="app_storage_location" required="1"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h2>E-mail notifications</h2>
+                    <div class="row mt16 o_settings_container">
+                        <div class="col-12 col-lg-6 o_setting_box" id="receive_app_update_mails_block">
+                            <div class="o_setting_left_pane">
+                                <field name="receive_app_update_mails"/>
+                            </div>
+                            <div class="o_setting_right_pane" name="account_taxcloud_right_pane">
+                                <label for="receive_app_update_mails" string="Receive e-emails about app updates"/>
+                                <div class="text-muted">
+                                    Receive e-mails about available app updates.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-md-6 o_setting_box" id="app_update_mail_user_block">
+                            <label string="User to notify"
+                                   for="app_update_user_id"/>
+                            <div class="text-muted">
+                                User to receive e-mails about app updates
+                            </div>
+                            <div class="mt16">
+                                <field name="app_update_user_id" required="1"/>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-6 o_setting_box" id="app_update_mail_template_block">
+                            <label string="E-mail template"
+                                   for="app_update_mail_template_id"/>
+                            <div class="text-muted">
+                                E-mail template which will be sent to notify users about app updates
+                            </div>
+                            <div class="mt16">
+                                <field name="app_update_mail_template_id" required="1"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

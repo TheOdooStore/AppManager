@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data noupdate="1">
+        <record id="app_manager_details" model="app.manager">
+            <field name="xml_kanban"></field>
+            <field name="kanban_version">0</field>
+        </record>
+    </data>
+</odoo>
