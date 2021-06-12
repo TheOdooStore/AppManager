@@ -199,7 +199,7 @@ class IrModuleModule(models.Model):
             it's version
         """
         installed_modules = self.env['ir.module.module'].search_read(
-            [('state', '=', 'installed')], ["id", "name", "installed_version", "latest_version", "state"]
+            [('state', '=', 'installed')], ["id", "name", "installed_version", "latest_version", "state", "author"]
         )
 
         # Don't worry we are not going to do anything unethical with this. In fact, right now we do not do anything
