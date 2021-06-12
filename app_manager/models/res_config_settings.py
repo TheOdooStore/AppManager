@@ -8,7 +8,8 @@ class ResConfigSettings(models.TransientModel):
 
     receive_app_update_mails = fields.Boolean(
         string='Receive app update e-mails',
-        config_parameter='app_manager.receive_app_update_mails'
+        default=True,
+        config_parameter='app_manager.receive_app_update_mails',
     )
 
     app_update_mail_template_id = fields.Many2one(
