@@ -59,4 +59,4 @@ sudo service odoo14-server restart
 
 
 ## Issues and bugs
-Have an issue or a bug? Please create a new report under the <a href="https://github.com/theodoostore/app_manager/issues">"Issues"</a> section.
+Have an issue or a bug? Please create a new report under the <a href="https://github.com/theodoostore/AppManager/issues">"Issues"</a> section.
