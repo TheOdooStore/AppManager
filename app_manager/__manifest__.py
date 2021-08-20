@@ -20,6 +20,7 @@
 
     # any module necessary for this one to work correctly
     'depends': ['product'],
+    'license': 'LGPL-3',
 
     # always loaded
     'data': [
